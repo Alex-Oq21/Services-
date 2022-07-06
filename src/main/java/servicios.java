@@ -14,17 +14,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
 public class servicios {
-   /*@Test
-    public void getSingleUser(){
-       RestAssured.given()
-               .log()
-               .all()
-               .contentType(ContentType.JSON)
-               .get("https://reqres.in/api/users/2")
-               .then()
-               .statusCode(200)
-               .body("data.email", Matchers.equalTo("janet.weaver@reqres.in"));
-   }*/
 
     @Before
     public void setUp(){
@@ -43,6 +32,17 @@ public class servicios {
         int statuscode = response.statusCode();
         String contentType = response.getContentType();
         assertThat(statuscode, equalTo(200));
+    }
+
+    @Test
+    public void getASingleUser(){
+        RestAssured.get("/users/2")
+                .then()
+                .log()
+                .all()
+                .statusCode(200)
+                .assertThat()
+                .body("data.first_name", Matchers.equalTo("Janet"));
     }
 
 }
