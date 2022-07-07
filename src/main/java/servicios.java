@@ -64,4 +64,15 @@ public class servicios {
         System.out.println(contentType);
     }
 
+    @Test
+    public void getSingleResource(){
+        RestAssured.given().get("/unknown/2")
+                .then()
+                .log()
+                .all()
+                .statusCode(200)
+                .body("data.name", Matchers.equalTo("fuchsia rose"));
+    }
+    
+
 }
