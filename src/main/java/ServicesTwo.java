@@ -68,6 +68,16 @@ public class ServicesTwo {
                 .body("token", Matchers.equalTo("QpwL5tke4Pnpja7X4"));
     }
 
-
-
+    @Test
+    public void loginFail(){
+        RestAssured.given()
+                .when()
+                .body("{\n" +
+                        "    \"email\": \"peter@klaven\"\n" +
+                        "}")
+                .post("/login")
+                .then()
+                .statusCode(400)
+                .body("error", Matchers.equalTo("Missing password"));
+    }
 }
