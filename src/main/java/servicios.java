@@ -83,4 +83,18 @@ public class servicios {
                 .statusCode(404);
     }
 
+    @Test
+    public void postUser(){
+        RestAssured.given()
+                .when()
+                .body("{\n" +
+                        "    \"name\": \"morpheus\",\n" +
+                        "    \"job\": \"leader\"\n" +
+                        "}")
+                .post("/users")
+                .then()
+                .statusCode(201)
+                .body("name", equalTo("morpheus"));
+    }
+    
 }
