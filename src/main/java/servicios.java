@@ -45,4 +45,23 @@ public class servicios {
                 .body("data.first_name", Matchers.equalTo("Janet"));
     }
 
+    @Test
+    public void getAllResources(){
+        Response response = given().get("/unknown");
+        Headers headers = response.getHeaders();
+        String body = response.getBody().asString();
+        int statusCode = response.getStatusCode();
+        String contentType = response.getContentType();
+        assertThat(statusCode, equalTo(200));
+
+        System.out.println("Headers*******************");
+        System.out.println(headers);
+        System.out.println();
+        System.out.println("Body**********************");
+        System.out.println(body);
+        System.out.println();
+        System.out.println("Content type***************");
+        System.out.println(contentType);
+    }
+
 }
