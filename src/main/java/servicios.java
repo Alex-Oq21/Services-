@@ -110,4 +110,20 @@ public class servicios {
                 .statusCode(200)
                 .body("job", Matchers.equalTo("zion resident"));
     }
+
+    @Test
+    public void updateUserAttribute(){
+        RestAssured.given()
+                .when()
+                .body("{\n" +
+                        "    \"name\": \"morpheus\",\n" +
+                        "    \"job\": \"zion resident\"\n" +
+                        "}")
+                .patch("/users/2")
+                .then()
+                .log()
+                .all()
+                .statusCode(200)
+                .body("name", equalTo("morpheus"));
+    }
 }
