@@ -28,7 +28,7 @@ public class ServicesTwo {
                 .statusCode(204);
     }
 
-    /*@Test
+    @Test
     public void registerUser(){
         RestAssured.given()
                 .when()
@@ -36,8 +36,10 @@ public class ServicesTwo {
                         "    \"email\": \"eve.holt@reqres.in\",\n" +
                         "    \"password\": \"pistol\"\n" +
                         "}")
-                .post("/register");
-    }*/
+                .post("/register")
+                .then()
+                .body("id", Matchers.equalTo(4));
+    }
 
     @Test
     public void loginUser() {
