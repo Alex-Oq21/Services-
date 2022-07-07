@@ -16,16 +16,16 @@ import static org.hamcrest.Matchers.equalTo;
 public class servicios {
 
     @Before
-    public void setUp(){
+    public void setUp() {
         RestAssured.baseURI = "https://reqres.in/";
-        RestAssured.basePath= "/api";
+        RestAssured.basePath = "/api";
         RestAssured.filters(new RequestLoggingFilter(), new ResponseLoggingFilter());
         RestAssured.requestSpecification = new RequestSpecBuilder()
                 .setContentType(ContentType.JSON).build();
     }
 
     @Test
-    public void GetAllUsers(){
+    public void GetAllUsers() {
         Response response = given().get("/users?page=2");
         Headers headers = response.getHeaders();
         String body = response.getBody().asString();
@@ -35,7 +35,7 @@ public class servicios {
     }
 
     @Test
-    public void getASingleUser(){
+    public void getASingleUser() {
         RestAssured.get("/users/2")
                 .then()
                 .log()
@@ -46,7 +46,7 @@ public class servicios {
     }
 
     @Test
-    public void getAllResources(){
+    public void getAllResources() {
         Response response = given().get("/unknown");
         Headers headers = response.getHeaders();
         String body = response.getBody().asString();
@@ -65,7 +65,7 @@ public class servicios {
     }
 
     @Test
-    public void getSingleResource(){
+    public void getSingleResource() {
         RestAssured.given().get("/unknown/2")
                 .then()
                 .log()
@@ -75,7 +75,7 @@ public class servicios {
     }
 
     @Test
-    public void resourceNotFound(){
+    public void resourceNotFound() {
         RestAssured.given().get("unknown/23")
                 .then()
                 .log()
@@ -84,7 +84,7 @@ public class servicios {
     }
 
     @Test
-    public void postUser(){
+    public void postUser() {
         RestAssured.given()
                 .when()
                 .body("{\n" +
@@ -96,5 +96,18 @@ public class servicios {
                 .statusCode(201)
                 .body("name", equalTo("morpheus"));
     }
-    
+
+    @Test
+    public void updateUser() {
+        RestAssured.given()
+                .when()
+                .body("{\n" +
+                        "    \"name\": \"morpheus\",\n" +
+                        "    \"job\": \"zion resident\"\n" +
+                        "}")
+                .put("/users/2")
+                .then()
+                .statusCode(200)
+                .body("job", Matchers.equalTo("zion resident"));
+    }
 }
