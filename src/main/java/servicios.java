@@ -73,6 +73,14 @@ public class servicios {
                 .statusCode(200)
                 .body("data.name", Matchers.equalTo("fuchsia rose"));
     }
-    
+
+    @Test
+    public void resourceNotFound(){
+        RestAssured.given().get("unknown/23")
+                .then()
+                .log()
+                .all()
+                .statusCode(404);
+    }
 
 }
