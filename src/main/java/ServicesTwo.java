@@ -42,6 +42,19 @@ public class ServicesTwo {
     }
 
     @Test
+    public void registerUserFail(){
+        RestAssured.given()
+                .when()
+                .body("{\n" +
+                        "    \"email\": \"sydney@fife\"\n" +
+                        "}")
+                .post("/register")
+                .then()
+                .statusCode(400)
+                .body("error", Matchers.equalTo("Missing password"));
+    }
+
+    @Test
     public void loginUser() {
         RestAssured.given()
                 .when()
@@ -54,5 +67,7 @@ public class ServicesTwo {
                 .statusCode(200)
                 .body("token", Matchers.equalTo("QpwL5tke4Pnpja7X4"));
     }
+
+
 
 }
